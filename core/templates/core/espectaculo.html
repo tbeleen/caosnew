@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block contenido %}
+    <h1 style="text-align: center; padding: 10px;">Espectáculo</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for noticia in lista %}
+                {% if noticia.TipoNoticia.descripcion == 'espectaculo' and noticia.estado == 'aprobado' %}
+                <div class="col-lg-8">
+                    <div class="card mb-4" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); background-color: #f8f9fa;">
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-4" style="font-weight: bold; color: #343a40;">{{ noticia.titulo | upper }}</h5>
+                            <p class="card-text" style="color: #6c757d;">{{ noticia.descripcion | capfirst }}</p>
+                            <p class="card-text"><small class="text-muted">Fecha: {{ noticia.fecha }}</small></p>
+                            <p class="card-text"><small class="text-muted">Categoría: {{ noticia.TipoNoticia | capfirst }}</small></p>
+                            <p class="card-text"><small class="text-muted">Periodista: {{ noticia.periodista.nombre | capfirst }} {{ noticia.periodista.apellido | capfirst }}</small></p>
+                            {% if noticia.imagen %}
+                            <div class="text-center mt-4">
+                                <img src="{{ noticia.imagen.url }}" alt="Imagen de la noticia" class="img-fluid" style="max-width: 100%; height: auto; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    </div>
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Periodistas</span></h2>
+    <div class="container-fluid pt-2">
+        <div class="row justify-content-center px-xl-2 pb-2">
+            {% for periodista in listafiltrada %}
+                {% if periodista.TipoPeriodista.descripcion == 'espectaculo' %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <a class="text-decoration-none" href="">
+                            <div class="cat-item d-flex align-items-center" style="max-width: 350px; margin: 0 auto; border: 1px solid #ccc; border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+                                <div class="overflow-hidden" style="width: 120px; height: 120px; margin-right: 15px;">
+                                    {% if periodista.imagen %}
+                                        <img class="img-fluid" src="{{periodista.imagen.url}}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                                    {% else %}
+                                        <img src="../../../static/core/img/usuario.png" class="rounded-circle" style="width: 80px; height: 80px; margin-top: 20px; margin-left: 20px; max-width: 100%;" alt="Avatar">
+                                    {% endif %}
+                                </div>
+                                <div class="flex-fill pl-3 content" style="padding: 15px;">
+                                    <h6 style="margin-bottom: 5px;">{{periodista.nombre}} {{periodista.apellido}}</h6>
+                                    <small class="text-body">{{periodista.rut}}</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container-fluid pt-5 pb-3" id="galeria">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Galeria</span></h2>
+        <div class="row px-xl-5">
+            {% for noticia in lista %}
+            {% if noticia.TipoNoticia.descripcion == 'espectaculo' and noticia.estado == 'aprobado' %}
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <div class="product-item bg-light mb-4" style="height: 350px;">
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="{{noticia.imagen.url}}" style="height: 200px;" alt="">
+                    </div>
+                    <div class="text-center py-4" style="text-align: justify; margin: 10px;">
+                        <a class="h6 text-decoration-none" href="">{{noticia.titulo}}</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+

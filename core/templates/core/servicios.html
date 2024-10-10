@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block contenido %}
+    <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div style="display: flex; justify-content: space-between; width: 100%; padding: 20px; box-sizing: border-box;">
+            <div style="background-color: #fff; border: 1px solid #ddd; padding: 20px; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); border-radius: 15px; text-align: center; margin: 0 10px;">
+                <h5 style="font-weight: bold; color: #343a40; margin-bottom: 20px;">SIMPLE</h5>
+                <h1 style="color: #6c757d;">%12.990</h1>
+                <p style="color: #6c757d;">Acceso a contenido básico y newsletter semanal.</p>
+                <div id="paypal-button" style="margin-top: 20px;"></div>
+            </div>
+            <div style="background-color: #fff; border: 1px solid #ddd; padding: 20px; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); border-radius: 15px; text-align: center; margin: 0 10px;">
+                <h5 style="font-weight: bold; color: #343a40; margin-bottom: 20px;">STANDARD</h5>
+                <h1 style="color: #6c757d;">%19.990</h1>
+                <p style="color: #6c757d;">Contenido adicional y soporte básico.</p>
+                <div id="paypal-button" style="margin-top: 20px;"></div>
+            </div>
+            <div style="background-color: #fff; border: 1px solid #ddd; padding: 20px; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); border-radius: 15px; text-align: center; margin: 0 10px;">
+                <h5 style="font-weight: bold; color: #343a40; margin-bottom: 20px;">PREMIUM</h5>
+                <h1 style="color: #6c757d;">%29.990</h1>
+                <p style="color: #6c757d;">Todo el contenido y soporte premium.</p>
+                <div id="paypal-button" style="margin-top: 20px;"></div>
+            </div>
+            <div style="background-color: #fff; border: 1px solid #ddd; padding: 20px; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); border-radius: 15px; text-align: center; margin: 0 10px; height: 500px">
+                <h5 style="font-weight: bold; color: #343a40; margin-bottom: 20px;">VIP</h1>
+                <h1 style="color: #6c757d;">%49.990</h1>
+                <p style="color: #6c757d;">Acceso exclusivo y soporte personalizado.</p>
+                <div id="paypal-button" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+        <div style="justify-content: center;" class="text-center" id="paypal-button"></div>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script>
+    paypal.Button.render({
+    // Configure environment
+    env: 'sandbox',
+    client: {
+    sandbox: 'sb-yqavl31270048_api1.business.example.com',
+    production: 'UK2WXM7MBJBZ3QF4'
+    },
+    // Customize button (optional)
+    locale: 'en_US',
+    style: {
+    size: 'small',
+    color: 'gold',
+    shape: 'pill',
+    },
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+    // Set up a payment
+    payment: function (data, actions) {
+    return actions.payment.create({
+    transactions: [{
+    amount: {
+    total: '10.00',
+    currency: 'USD'
+    }
+    }]
+    });
+    },
+    // Execute the payment
+    onAuthorize: function (data, actions) {
+    return actions.payment.execute().then(function () {
+    // Show a confirmation message to the buyer
+    window.alert('Thank you for your purchase!');
+    });
+    }
+    }, '#paypal-button');
+    </script>
+{% endblock %}

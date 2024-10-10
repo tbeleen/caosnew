@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+
+{% for noticia in lista %}
+
+<div class="card mb-4" style="max-width: 700px; margin: 20px auto; border-radius: 10px; background-color: rgb(240, 238, 238); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+    <div class="card-body p-4">
+        <h5 class="card-title text-center text-uppercase font-weight-bold">{{ noticia.titulo }}</h5>
+        <p class="card-text">{{ noticia.descripcion | capfirst }}</p>
+        <p class="card-text text-muted"><small>{{ noticia.fecha }}</small></p>
+        <p class="card-text"><strong>Categoria:</strong> {{ noticia.TipoNoticia | capfirst }}</p>
+        <p class="card-text"><em>Periodista:</em> {{ noticia.periodista.nombre | capfirst }} {{ noticia.periodista.apellido | capfirst }}</p>
+        <p class="card-text"><strong></strong> {{ noticia.estado | capfirst }}</p>
+        {% if noticia.imagen %}
+        <div class="text-center mt-3">
+            <img src="{{ noticia.imagen.url }}" alt="Imagen de la noticia" class="img-fluid rounded" style="object-fit: cover; max-height: 300px;">
+        </div>
+        {% endif %}
+            <div class="text-center mt-4">
+                <a class="btn btn-outline-success mx-2" href="{% url 'solicitudupdate' noticia.id %}">Ver</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'core/js/funciones.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}
+
+

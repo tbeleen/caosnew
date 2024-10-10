@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+{% for perro in listaclima %}
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title"> {{perro.timezone}} </h5>
+        <a href="#" class="btn btn-primary">{{perro.status}} </a>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
